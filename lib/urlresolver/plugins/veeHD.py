@@ -32,7 +32,13 @@ from t0mm0.common.net import Net
 
 net = Net()
 addon_id = 'plugin.video.dailyflix'
-selfAddon = xbmcaddon.Addon(id=addon_id)
+try:
+    selfAddon = xbmcaddon.Addon(id=addon_id)
+    login = selfAddon.getSetting('veeHDResolver_username')
+    pword = selfAddon.getSetting('veeHDResolver_password')
+except Exception, e:
+    login = ''
+    pword = ''
 
 class veeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     implements = [UrlResolver, SiteAuth, PluginSettings]
@@ -106,8 +112,8 @@ class veeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         loginurl = 'http://veehd.com/login'
         ref = 'http://veehd.com/'
         submit = 'login'
-        login = selfAddon.getSetting('veeHDResolver_username')
-        pword = selfAddon.getSetting('veeHDResolver_password')
+        # login = selfAddon.getSetting('veeHDResolver_username')
+        # pword = selfAddon.getSetting('veeHDResolver_password')
         terms = 'on'
         remember = 'on'
         data = {'ref': ref, 'uname': login, 'pword': pword, 'submit': submit, 'terms': terms, 'remember_me': remember}
